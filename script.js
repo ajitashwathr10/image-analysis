@@ -63,6 +63,14 @@ document.getElementById('uploadButton'.addEventListener('click', async () => {
             fetch(`https://api.imagga.com/v2/tags?image_upload_id=${upload_id}`, {
                 headers: { 'Authorization': authHeader }
             }).then(res => res.json())
-        ])
+        ]);
+        displayColors(colorsResult.result.colors);
+        displayTags(tagsResult.result.tags);
+    } catch(error) {
+        console.error('Error:', error);
+        showToast('An error occurred while processing the image!');
+    } finally {
+        uploadModal.style.display = 'none';
     }
-}))
+}));
+
