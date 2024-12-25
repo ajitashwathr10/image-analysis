@@ -8,28 +8,36 @@
 </head>
 <body>
     <h1>Image Analysis</h1>
-    <div class = "wrapper">
-        <div class = "container">
-            <h3>Upload An Image</h3>
+    <main class = "wrapper">
+        <section class = "upload-container">
+            <h2>Upload An Image</h2>
+            <div class = "preview-container">
+                <img id = "imagePreview" alt="Preview" style="display: none;">
+            </div>
             <div class = "buttons">
-                <input type = "file" id = "imageInput" acccept = "image/*" style = "display: none;">
+                <input type = "file" id = "imageInput" accept = "image/*" style = "display: none;">
                 <button class = "file-input-button" onclick = "document.getElementById('imageInput').click();">Choose File</button>
                 <button id = "uploadButton">Analyze Image</button>
             </div>
-        </div>
-        <div class = "colors-container">
+        </section>
+
+        <section class = "colors-container">
+            <h2>Color Analysis</h2>
             <p class = "error">Nothing to show</p>
-        </div>
-    </div>
-    <div class = "tags-container">
-        <h3>Image Data</h3>
+            <div class = "results"></div>
+        </section>
+    </main>
+
+    <section class = "tags-container">
+        <h2>Image Data</h2>
         <p class = "error">Nothing to show</p>
         <div class = "results"></div>
         <div class = "buttons">
             <button id = "seeMoreButton" style = "display: none;">See More</button>
             <button id = "exportTagsButton" style = "display: none;">Export Tags</button>
         </div>
-    </div>  
+    </section>
+
     <div id = "uploadModal" class = "modal">
         <div class = "modal-content">
             <h3>Uploading...</h3>
@@ -40,4 +48,4 @@
     </div>
     <script src = "script.js"></script>
 </body>
-</html> 
+</html>
