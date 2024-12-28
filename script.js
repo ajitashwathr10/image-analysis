@@ -183,14 +183,20 @@ function exportTagsToFile() {
     document.body.removeChild(a);
     URL.revokeObjectURL(url);
 }
-
+/*
 function showUploadModal() {
     elements.uploadModal.style.display = 'flex';
     elements.uploadProgress.style.width = '0%';
 }
+*/
+
+function showUploadModal() {
+    elements.uploadModal.classList.add('show');
+    elements.uploadProgress.style.width = '0%';
+}
 
 function hideUploadModal() {
-    elements.uploadModal.style.display = 'none';
+    elements.uploadModal.classList.remove('show');
 }
 
 function updateProgressBar(percentage) {
