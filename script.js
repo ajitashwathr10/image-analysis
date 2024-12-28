@@ -12,12 +12,6 @@ const elements = {
     exportTagsButton: document.getElementById('exportTagsButton')
 };
 
-const API_CONFIG = {
-    apiKey: 'acc_40e5be0bc6727e4',
-    apiSecret: 'bf3ce7f65b9cc0d1636a5106c72aa96d',
-    baseUrl: 'https://api.imagga.com/v2'
-};
-
 elements.imageInput.addEventListener('change', handleImagePreview);
 elements.uploadButton.addEventListener('click', handleImageUpload);
 elements.seeMoreButton.addEventListener('click', showMoreTags);
@@ -37,28 +31,30 @@ function handleImagePreview(event) {
 
 async function handleImageUpload() {
     const file = elements.imageInput.files[0];
-    if (!file) {
-        showToast('Please select an image to upload');
+    if(!file) {
+        showToast('Please select an image to upload.');
         return;
     }
-    const authHeader = 'Basic ' + btoa(`${API_CONFIG.apiKey}:${API_CONFIG.apiSecret}`);
     const formData = new FormData();
     formData.append('image', file);
 
     try {
         showUploadModal();
-        const uploadId = await uploadImage(formData, authHeader);
-        const [colorResult, tagsResult] = await Promise.all([
-            fetchColorAnalysis(uploadId, authHeader),
-            fetchTagAnalysis(uploadId, authHeader)
-        ]);
+        const response = await fetch('api/analyze', {
+            method: 'POST',
+            body: formData
+        });
 
-        displayColors(colorResult.result.colors);
-        displayTags(tagsResult.result.tags);
+        if(!response.ok) {
+            throw new Error('Failed to analyze image');
+        }
 
-    } catch (error) {
-        console.error('Error:', error);
-        showToast('An error occurred while processing the image!');
+        const data = await response.json();
+        displayColors(data.colors);
+        displayTags(data.tags);
+    } catch(error) {
+        console.error('Error: ', error);
+        showToast('An error occurred while processing the image');
     } finally {
         hideUploadModal();
     }
